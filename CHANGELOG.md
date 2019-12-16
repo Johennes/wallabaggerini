@@ -15,4 +15,4 @@ Initial release
 [Keep a Changelog]: https://keepachangelog.com/en/1.0.0/
 [Semantic Versioning]: https://semver.org/spec/v2.0.0.html
 [Unreleased]: https://nosuchdomain.mooo.com/git/doc/wallabaggerini/compare/0.1.0...master
-[0.1.0]: https://nosuchdomain.mooo.com/git/doc/wallabaggerini/-/tags/0.1.0
+[0.1.0]: https://nosuchdomain.mooo.com/git/doc/wallabaggerini/src/tag/0.1.0
