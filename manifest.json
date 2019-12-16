@@ -1,0 +1,36 @@
+{
+  "manifest_version": 2,
+  "name": "wallabaggerini",
+  "version": "0.1.0",
+  "description": "Wallabag bookmarklet as page action in the URL bar",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
+  },
+  "page_action": {
+    "browser_style": true,
+    "default_icon": {
+      "19": "icons/icon-19.png",
+      "38": "icons/icon-38.png"
+    },
+    "default_title": "Save to Wallabag",
+    "show_matches": ["<all_urls>"]
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "walla@baggerini"
+    }
+  }
+}
