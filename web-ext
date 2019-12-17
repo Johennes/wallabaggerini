@@ -17,4 +17,6 @@ node_modules/web-ext/bin/web-ext $command $flags \
     --ignore-files "package-lock.json" \
     --ignore-files "web-ext" \
     --ignore-files "icons/icon.svg" \
-    --ignore-files "icons/icon.xcf"
+    --ignore-files "icons/icon.xcf" \
+    --ignore-files "screenshots" \
+    $@

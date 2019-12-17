@@ -4,6 +4,8 @@ This is a drop-in replacement for the Wallabag bookmarklet as a page action. I d
 because after having used Pocket for some time, the URL bar felt like the most natural
 placement of the button to me.
 
+![](screenshots/screenshot.png "Screenshot")
+
 The default [Wallabagger] extension is more powerful than the bookmarklet but I did not
 want to use it at the time of writing this because it stored the account password in plain
 text in the browser storage.
