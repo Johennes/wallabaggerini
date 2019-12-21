@@ -12,11 +12,11 @@ fi
 
 node_modules/web-ext/bin/web-ext $command $flags \
     --ignore-files "**/*.xcf" \
+    --ignore-files "CHANGELOG.md" \
     --ignore-files "COPYING" \
     --ignore-files "README.md" \
     --ignore-files "package-lock.json" \
     --ignore-files "web-ext" \
     --ignore-files "icons/icon.svg" \
-    --ignore-files "icons/icon.xcf" \
     --ignore-files "screenshots" \
     $@
