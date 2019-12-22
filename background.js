@@ -15,8 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-(() => {    
+(() => {
   browser.pageAction.onClicked.addListener(handlePageAction)
+
+  // Try to explicitly show the page action on Android (doesn't seem to work with
+  // the manifest matches definition alone)
+  browser.runtime.getPlatformInfo().then(platformInfo => {
+    if (platformInfo.os === 'android') {
+      browser.tabs.onActivated.addListener(handleActivated)
+    }
+  })
 
   async function handlePageAction(tab) {
     let settings = await loadSettings()
@@ -28,9 +36,13 @@
   }
 
   async function loadSettings() {
-    let result = await browser.storage.sync.get(["installationUrl"])
+    let result = await browser.storage.sync.get(['installationUrl'])
     return {
-      installationUrl: result.hasOwnProperty("installationUrl") ? result.installationUrl : ""
+      installationUrl: result.hasOwnProperty('installationUrl') ? result.installationUrl : ''
     }
+  }
+
+  function handleActivated(activeInfo) {
+    browser.pageAction.show(activeInfo.tabId)
   }
 })()
