@@ -1,5 +1,7 @@
 # Wallabaggerini
 
+*Mirrors: [GitHub] ~ [GitLab]*
+
 This is a drop-in replacement for the Wallabag bookmarklet as a page action. I did this
 because after having used Pocket for some time, the URL bar felt like the most natural
 placement of the button to me.
@@ -27,3 +29,5 @@ later version.
 
 [Wallabagger]: https://addons.mozilla.org/en-US/firefox/addon/wallabagger/
 [addons.mozilla.org]: https://addons.mozilla.org/en-US/firefox/addon/wallabaggerini/
+[GitHub]: https://github.com/Johennes/wallabaggerini
+[GitLab]: https://gitlab.com/cherrypicker/wallabaggerini
