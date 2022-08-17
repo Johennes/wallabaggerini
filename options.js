@@ -24,7 +24,7 @@
 
   function storeInstallationUrl() {
     browser.storage.sync.set({
-      installationUrl: document.querySelector(`input[name=installation-url]`).value
+      installationUrl: document.querySelector(`input[name=installation-url]`).value?.replace(/\/+$/, '')
     })
   }
 
