@@ -16,6 +16,9 @@
 // along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 (() => {
+  let isDarkTheme = false;
+  let tabIdsInSyncWithTheme = new Set([]);
+
   browser.pageAction.onClicked.addListener(handlePageAction)
 
   // Try to explicitly show the page action on Android (doesn't seem to work with
@@ -26,8 +29,10 @@
     }
   })
 
-  browser.theme.getCurrent().then(theme => updatePageActionIcon(theme));
-  browser.theme.onUpdated.addListener(updateInfo => updatePageActionIcon(updateInfo.theme));
+  browser.theme.getCurrent().then(theme => handleThemeChanged(theme));
+  browser.theme.onUpdated.addListener(updateInfo => handleThemeChanged(updateInfo.theme));
+  browser.tabs.onActivated.addListener(activeInfo => handleTabActivated(activeInfo));
+  browser.tabs.onUpdated.addListener((tabId, changeInfo, tab) => handleTabUpdated(tabId, changeInfo, tab));
 
   async function handlePageAction(tab) {
     let settings = await loadSettings()
@@ -47,6 +52,23 @@
 
   function handleActivated(activeInfo) {
     browser.pageAction.show(activeInfo.tabId)
+  }
+
+  function handleThemeChanged(theme) {
+    const isDarkThemeNew = checkIsDarkTheme(theme);
+    if (isDarkThemeNew === isDarkTheme) {
+      return;
+    }
+    isDarkTheme = isDarkThemeNew;
+    tabIdsInSyncWithTheme.clear();
+  }
+
+  function checkIsDarkTheme(theme) {
+    return theme?.colors?.frame && colorIsDark(colorToRgb(theme.colors.frame));
+  }
+
+  function colorIsDark(rgb) {
+    return rgb[0] + rgb[1] + rgb[2] < 3 * 127;
   }
 
   function colorToRgb(color) {
@@ -91,16 +113,25 @@
     }
   }
 
-  function colorIsDark(rgb) {
-    return rgb[0] + rgb[1] + rgb[2] < 3 * 127;
+  function handleTabActivated(activeInfo) {
+    updatePageActionIconIfNeeded(activeInfo.tabId);
   }
 
-  function updatePageActionIcon(theme) {
-    const paths = getPageActionIconPaths(theme?.colors?.frame && colorIsDark(colorToRgb(theme.colors.frame)));
-    browser.tabs.query({}).then(tabs => {
-      for (const tab of tabs) {
-        browser.pageAction.setIcon({ path: paths, tabId: tab.id });
+  function handleTabUpdated(tabId, changeInfo, tab) {
+    updatePageActionIconIfNeeded(tabId);
+  }
+
+  function updatePageActionIconIfNeeded(tabId) {
+    if (tabIdsInSyncWithTheme.has(tabId)) {
+      return;
+    }
+    browser.pageAction.isShown({ tabId: tabId }).then(isShown => {
+      if (!isShown) {
+        return;
       }
+      const paths = getPageActionIconPaths(isDarkTheme);
+      browser.pageAction.setIcon({ path: paths, tabId: tabId });
+      tabIdsInSyncWithTheme.add(tabId);
     });
   }
 

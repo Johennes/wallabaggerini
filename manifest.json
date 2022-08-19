@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Wallabaggerini",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Wallabag bookmarklet as page action in the URL bar",
   "icons": {
     "48": "icons/icon-48.png",
